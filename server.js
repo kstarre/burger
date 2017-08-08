@@ -1,12 +1,18 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const routes = require('./controllers/burgers_controller');
+const PORT = process.env.PORT || 4000
+let app = express();
 
-// Parse application/x-www-form-urlencoded
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Have express use bodyparser, method override, routes, and the static public files
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Override ?_method=DELETE or PUT
 app.use(methodOverride("_method"));
-
-// Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(process.cwd() + "/public"));
+app.use("/", routes);
+
+app.listen(PORT);
