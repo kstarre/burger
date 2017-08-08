@@ -3,7 +3,7 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers/burgers_controller');
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 let app = express();
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -15,4 +15,6 @@ app.use(methodOverride("_method"));
 app.use(express.static(process.cwd() + "/public"));
 app.use("/", routes);
 
-app.listen(PORT);
+app.listen(PORT, () => {
+	console.log("App listening on: " + PORT);
+});

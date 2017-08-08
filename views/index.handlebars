@@ -1,9 +1,10 @@
 <div class="col-md-4">
 	<ul>
 		{{#each burgers}}
-			{{#unless devour}}
+			{{#unless devoured}}
 				<li>
-					{{id burger_name}}
+					#{{id}}
+					{{burger_name}}
 
 					<form action="/{{id}}?_method=PUT" method="POST">
 					  <input type="hidden" name="devoured" value="1">
@@ -17,9 +18,10 @@
 <div class="col-md-4 col-md-offset-4 devoured">
 	<ul>
 		{{#each burgers}}
-			{{#if devour}}
+			{{#if devoured}}
 	    		<li>
-	    			{{id burger_name}}
+	    			#{{id}} 
+	    			{{burger_name}}
 	    		</li>
 	    	{{/if}}
 		{{/each}}

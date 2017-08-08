@@ -25,13 +25,16 @@ function objToSql(obj) {
 };
 
 let orm = {
-	selectAll: tableName => {
+	selectAll: (tableName, cb) => {
 		let queryString = "SELECT * FROM " + tableName + ";";
-		connection.queryAsync(queryString).then(data => {
-			return data;
+		connection.query(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
 		});
 	},
-	insertOne: (tableName, col, val) => {
+	insertOne: (tableName, col, val, cb) => {
 		let queryString = "INSERT INTO " + tableName;
 		queryString += " (";
 		queryString += col.toString();
@@ -40,19 +43,25 @@ let orm = {
 		queryString += printQuestionMarks(val.length);
 		queryString += ") ";
 
-		connection.queryAsync(queryString, val).then( data => {
-			return data;
+		connection.query(queryString, val, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
 		});
 	},
-	updateOne: (tableName, newColVal, condition) => {
+	updateOne: (tableName, newColVal, condition, cb) => {
 		let queryString = "UPDATE " + tableName;
 		queryString += " SET ";
 		queryString += objToSql(newColVal);
 		queryString += " WHERE ";
 		queryString += condition;
 
-		connection.queryAsync(queryString).then( data => {
-			return data;
+		connection.queryAsync(queryString, function(err, result) {
+			if (err) {
+				throw err;
+			}
+			cb(result);
 		});
 	}
 };

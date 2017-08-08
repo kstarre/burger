@@ -1,0 +1,9 @@
+body {
+	background-color: #f2deb3;
+}
+img.img-responsive.center-block {
+    margin-bottom: 20px;
+}
+textarea.form-control {
+    margin-bottom: 3px;
+}
